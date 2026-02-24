@@ -43,4 +43,4 @@ EXPOSE 3000
 
 WORKDIR /repo/packages/happy-server
 
-CMD ["tsx", "./sources/main.ts"]
+CMD ["npx", "tsx", "./sources/main.ts"]
