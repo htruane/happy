@@ -41,4 +41,6 @@ COPY --from=builder /repo/packages/happy-server /repo/packages/happy-server
 
 EXPOSE 3000
 
-CMD ["node", "--import", "tsx", "packages/happy-server/sources/main.ts"]
+WORKDIR /repo/packages/happy-server
+
+CMD ["tsx", "./sources/main.ts"]
