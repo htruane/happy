@@ -45,7 +45,7 @@ export function authRoutes(app: Fastify) {
                 supportsV2: z.boolean().nullish()
             }),
             response: {
-                200: z.union([z.object({
+                200: z.discriminatedUnion('state', [z.object({
                     state: z.literal('requested'),
                 }), z.object({
                     state: z.literal('authorized'),
@@ -172,7 +172,7 @@ export function authRoutes(app: Fastify) {
                 publicKey: z.string(),
             }),
             response: {
-                200: z.union([z.object({
+                200: z.discriminatedUnion('state', [z.object({
                     state: z.literal('requested'),
                 }), z.object({
                     state: z.literal('authorized'),

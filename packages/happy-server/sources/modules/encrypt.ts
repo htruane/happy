@@ -9,12 +9,12 @@ export async function initEncrypt() {
     }));
 }
 
-export function encryptString(path: string[], string: string) {
-    return keyTree!.symmetricEncrypt(path, string);
+export function encryptString(path: string[], string: string): Buffer {
+    return Buffer.from(keyTree!.symmetricEncrypt(path, string));
 }
 
-export function encryptBytes(path: string[], bytes: Uint8Array<ArrayBuffer>) {
-    return keyTree!.symmetricEncrypt(path, bytes);
+export function encryptBytes(path: string[], bytes: Uint8Array<ArrayBuffer>): Buffer {
+    return Buffer.from(keyTree!.symmetricEncrypt(path, bytes));
 }
 
 export function decryptString(path: string[], encrypted: Uint8Array<ArrayBuffer>) {
