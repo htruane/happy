@@ -1,6 +1,6 @@
 import { websocketEventsCounter } from "@/app/monitoring/metrics2";
 import { buildNewArtifactUpdate, buildUpdateArtifactUpdate, buildDeleteArtifactUpdate, eventRouter } from "@/app/events/eventRouter";
-import { db, toBytes } from "@/storage/db";
+import { db } from "@/storage/db";
 import { allocateUserSeq } from "@/storage/seq";
 import { log } from "@/utils/log";
 import { randomKeyNaked } from "@/utils/randomKeyNaked";
@@ -161,7 +161,7 @@ export function artifactUpdateHandler(userId: string, socket: Socket) {
             let bodyUpdate: { value: string; version: number } | undefined;
 
             if (header) {
-                updateData.header = toBytes(privacyKit.decodeBase64(header.data));
+                updateData.header = privacyKit.decodeBase64(header.data);
                 updateData.headerVersion = header.expectedVersion + 1;
                 headerUpdate = {
                     value: header.data,
@@ -170,7 +170,7 @@ export function artifactUpdateHandler(userId: string, socket: Socket) {
             }
 
             if (body) {
-                updateData.body = toBytes(privacyKit.decodeBase64(body.data));
+                updateData.body = privacyKit.decodeBase64(body.data);
                 updateData.bodyVersion = body.expectedVersion + 1;
                 bodyUpdate = {
                     value: body.data,
@@ -309,11 +309,11 @@ export function artifactUpdateHandler(userId: string, socket: Socket) {
                 data: {
                     id,
                     accountId: userId,
-                    header: toBytes(privacyKit.decodeBase64(header)),
+                    header: privacyKit.decodeBase64(header),
                     headerVersion: 1,
-                    body: toBytes(privacyKit.decodeBase64(body)),
+                    body: privacyKit.decodeBase64(body),
                     bodyVersion: 1,
-                    dataEncryptionKey: toBytes(privacyKit.decodeBase64(dataEncryptionKey)),
+                    dataEncryptionKey: privacyKit.decodeBase64(dataEncryptionKey),
                     seq: 0
                 }
             });

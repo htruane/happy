@@ -1,5 +1,5 @@
 import { eventRouter, buildNewArtifactUpdate, buildUpdateArtifactUpdate, buildDeleteArtifactUpdate } from "@/app/events/eventRouter";
-import { db, toBytes } from "@/storage/db";
+import { db } from "@/storage/db";
 import { Fastify } from "../types";
 import { z } from "zod";
 import { randomKeyNaked } from "@/utils/randomKeyNaked";
@@ -189,11 +189,11 @@ export function artifactsRoutes(app: Fastify) {
                 data: {
                     id,
                     accountId: userId,
-                    header: toBytes(privacyKit.decodeBase64(header)),
+                    header: privacyKit.decodeBase64(header),
                     headerVersion: 1,
-                    body: toBytes(privacyKit.decodeBase64(body)),
+                    body: privacyKit.decodeBase64(body),
                     bodyVersion: 1,
-                    dataEncryptionKey: toBytes(privacyKit.decodeBase64(dataEncryptionKey)),
+                    dataEncryptionKey: privacyKit.decodeBase64(dataEncryptionKey),
                     seq: 0
                 }
             });
@@ -309,7 +309,7 @@ export function artifactsRoutes(app: Fastify) {
             let bodyUpdate: { value: string; version: number } | undefined;
 
             if (header !== undefined && expectedHeaderVersion !== undefined) {
-                updateData.header = toBytes(privacyKit.decodeBase64(header));
+                updateData.header = privacyKit.decodeBase64(header);
                 updateData.headerVersion = expectedHeaderVersion + 1;
                 headerUpdate = {
                     value: header,
@@ -318,7 +318,7 @@ export function artifactsRoutes(app: Fastify) {
             }
 
             if (body !== undefined && expectedBodyVersion !== undefined) {
-                updateData.body = toBytes(privacyKit.decodeBase64(body));
+                updateData.body = privacyKit.decodeBase64(body);
                 updateData.bodyVersion = expectedBodyVersion + 1;
                 bodyUpdate = {
                     value: body,

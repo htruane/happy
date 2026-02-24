@@ -1,7 +1,7 @@
 import { eventRouter } from "@/app/events/eventRouter";
 import { Fastify } from "../types";
 import { z } from "zod";
-import { db, toBytes } from "@/storage/db";
+import { db } from "@/storage/db";
 import { log } from "@/utils/log";
 import { randomKeyNaked } from "@/utils/randomKeyNaked";
 import { allocateUserSeq } from "@/storage/seq";
@@ -59,7 +59,7 @@ export function machinesRoutes(app: Fastify) {
                     metadataVersion: 1,
                     daemonState: daemonState || null,
                     daemonStateVersion: daemonState ? 1 : 0,
-                    dataEncryptionKey: dataEncryptionKey ? toBytes(Buffer.from(dataEncryptionKey, 'base64')) : undefined,
+                    dataEncryptionKey: dataEncryptionKey ? new Uint8Array(Buffer.from(dataEncryptionKey, 'base64')) : undefined,
                     // Default to offline - in case the user does not start daemon
                     active: false,
                     // lastActiveAt and activeAt defaults to now() in schema

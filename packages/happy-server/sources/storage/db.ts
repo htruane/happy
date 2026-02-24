@@ -53,14 +53,6 @@ function createClient(): PrismaClient {
 
 export const db = createClient();
 
-/**
- * Convert binary data to a format Prisma accepts for Bytes columns.
- * PGlite adapter doesn't handle raw Uint8Array; Buffer works across all adapters.
- */
-export function toBytes(data: Uint8Array | Buffer): Uint8Array<ArrayBuffer> {
-    return Buffer.from(data) as unknown as Uint8Array<ArrayBuffer>;
-}
-
 export function getPGlite(): PGlite | null {
     return pgliteInstance;
 }

@@ -1,5 +1,4 @@
 import { KeyTree, crypto } from "privacy-kit";
-import { toBytes } from "@/storage/db";
 
 let keyTree: KeyTree | null = null;
 
@@ -11,11 +10,11 @@ export async function initEncrypt() {
 }
 
 export function encryptString(path: string[], string: string) {
-    return toBytes(keyTree!.symmetricEncrypt(path, string));
+    return keyTree!.symmetricEncrypt(path, string);
 }
 
 export function encryptBytes(path: string[], bytes: Uint8Array<ArrayBuffer>) {
-    return toBytes(keyTree!.symmetricEncrypt(path, bytes));
+    return keyTree!.symmetricEncrypt(path, bytes);
 }
 
 export function decryptString(path: string[], encrypted: Uint8Array<ArrayBuffer>) {
